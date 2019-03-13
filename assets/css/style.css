@@ -4,7 +4,7 @@ body{
     background-repeat: no-repeat;
     background-position: top right;
     background-attachment: fixed;
-    background-color: black;
+    background-color: #e2e2e2;
     /* background-size:  cover; */
     /* margin-bottom: 60px; */
 }
@@ -12,4 +12,9 @@ body{
 .player-card {
     background-color: white;
     border-radius: 4px;    
+}
+
+#quiz li:hover{
+    background-color:rgb(55, 180, 230);
+    cursor: pointer;
 }
