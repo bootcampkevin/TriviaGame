@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/style.css">    
 
-    <title></title>
+    <title>Trivia Game</title>
   </head>
   <body>
     <header>
@@ -27,8 +27,8 @@
         </div>
         <div class="collapse navbar-collapse bg-dark" id="navbarMain">
           <div class="navbar-nav">
-            <!-- <div class="nav-item nav-link active pl-5" href="#"><button type="button" class="btn btn-primary" id="btn-reset" data-toggle="collapse" data-target="#navbarMain">Reset Game</button></div>
-                  <div class="nav-item nav-link active pl-5" href="#"><button type="button" class="btn btn-primary" id="btn-sfx" data-toggle="collapse" data-target="#navbarMain">Toggle SFX</button></div>               -->
+            <div class="nav-item nav-link active pl-5" href="#"><button type="button" class="btn btn-primary" id="header-btn-reset"
+                data-toggle="collapse" data-target="#navbarMain" onclick="reset()">Reset Game</button></div>            
           </div>
         </div>
       </nav>
@@ -39,27 +39,24 @@
     
           <div class="row p-2" style="border: 1px solid purple" id="quiz">
             <div class="col-2 p-2" style="border: 1px solid yellow"><img src="http://placehold.it/50x100">
-              <div id="left-game">Left Game</div>
+              <div id="left-game">Time Left</div>
+              <div id="countdown-timer"></div>
             </div>
-            <div class="col-10 p-2" style="border: 1px solid blue"><div class="title">Title</div>
-              <div id="right-game"></div>
+            <div class="col-10 p-2" style="border: 1px solid blue"><div class="title"></div>
+              <div id="right-game">
+                <div id="question-area"></div>
+                <div id="answer-area"></div>
+              </div>
             </div>
           </div>
-          <div class="row p-2 d-none" style="border: 1px solid purple" id="result">
-              <div class="col-2 p-2" style="border: 1px solid yellow"><img src="http://placehold.it/50x100">
-                <div id="left-game">Left Game</div>
-              </div>
-              <div class="col-10 p-2" style="border: 1px solid blue"><img src="http://placehold.it/75x200">
-                <div id="right-game">Right Game</div>
-              </div>
-          </div>
-    
+
         </div>
     
       </div>
       <div class="row p-2" style="border: 1px solid aqua">
         <div class="col p-2" style="border: 1px solid black">
-          <button type="button" class="btn btn-warning" id="start-btn">Start</button>          
+          <button type="button" class="btn btn-warning" id="start-btn">Start</button>
+          <button type="button" class="btn btn-warning" id="reset-btn">Reset</button>          
         </div>
       </div>
       <!-- style="border: 1px solid #d2d2d2;"-->

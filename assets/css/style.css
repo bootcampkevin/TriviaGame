@@ -14,7 +14,7 @@ body{
     border-radius: 4px;    
 }
 
-#quiz li:hover{
+.quiz:hover{
     background-color:rgb(55, 180, 230);
     cursor: pointer;
 }

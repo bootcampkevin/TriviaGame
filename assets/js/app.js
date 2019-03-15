@@ -6,112 +6,205 @@ $(document).ready(function () {
   //Global Variables, then Objects, then Function Calls, yo.
 
   //GLOBALS
+  let correctNum = 0;
+  let incorrectNum = 0;
+  let unansweredNum = 0;
+  let timer = 20;
+  let runFlag = false;
+  let gameArray = [];
+  let gameIndex = 0;
+  let timerInterval;
+  let currentQuestion;
+  let guessedAnswer;
+  let displayDelay;
 
-  
+
   //OBJECTS
-  // Trivia Questions
-  class gameQuestion {
-    constructor(q, a1, a2, a3, a4, ca, img, index) {
-      this.question = q;
-      this.answer1 = a1;
-      this.answer2 = a2;
-      this.answer3 = a3;
-      this.answer4 = a4;
-      this.correctAnswer = ca;
-      this.imgName = img;
-      this.questionIndex = index;
+  var trivia = [
+    {
+      question: 'What is allspice alternatively known as?',
+      choices: ['Pimento', 'Grain', 'Filiment', 'Cinnamon'],
+      answer: 0,
+      imgSrc: './assets/images/questions/Q.png'
+    },
+    {
+      question: 'How many U.S. states border the Gulf of Mexico?',
+      choices: ['8', '4', '1', '5'],
+      answer: 3,
+      imgSrc: './assets/images/questions/Q.png'
+    },
+    {
+      question: 'What is the world’s longest river?',
+      choices: ['Nile', 'Amazon', 'Colorado', 'Sahara'],
+      answer: 1,
+      imgSrc: './assets/images/questions/Q.png'
+    },
+    {
+      question: 'What is the world’s largest ocean?',
+      choices: ['Pacific', 'Antarctic', 'Yellow', 'Indiana'],
+      answer: 0,
+      imgSrc: './assets/images/questions/Q.png'
+    },
+    {
+      question: 'Which country is Prague in?',
+      choices: ['Romania', 'Italy', 'Georgia', 'Czech Republic'],
+      answer: 3,
+      imgSrc: './assets/images/questions/Q.png'
+    },
+    {
+      question: 'What does the N stand for in NATO?',
+      choices: ['National', 'North', 'Negative', 'New'],
+      answer: 1,
+      imgSrc: './assets/images/questions/Q.png'
+    }
+  ];
+
+  $('#reset-btn').hide();
+
+  //start button is the beginning of the trivia game
+  $('#start-btn').on('click', function () {
+    $('#start-btn').hide();
+    //fill the game array with the trivia objects, shuffled around
+    setArrayShuffle();
+    // questionDisplay();
+    displayDelay = setTimeout(questionDisplay, 1000);
+    runTimer();
+    // $('#reset-btn').show();
+  });
+
+  function setArrayShuffle() {
+    for (var i = 0; i < trivia.length; i++) {
+      gameArray.push(trivia[i]);
+      //TODO generate a random index in array, shuffle up the gameArray.
+      // gameIndex = Math.floor(Math.random() * gameArray.length);
+    }
+
+  }
+
+  function questionDisplay() {
+    currentQuestion = gameArray[gameIndex];
+    gameIndex++;
+
+    $('#question-area').html('<h2>' + currentQuestion.question + '</h2>');
+    for (var i = 0; i < currentQuestion.choices.length; i++) {
+      var choiceDiv = $('<div>');
+      choiceDiv.addClass('list-group-item quiz');
+      choiceDiv.html(currentQuestion.choices[i]);
+      //assign array position to it so can check answer
+      choiceDiv.attr('data-answerIndex', i);
+      $('#answer-area').append(choiceDiv);
 
     }
-    displayQuestion() {
-      let displayQ =
-        '<div class="card">' +
-        '<img src="src="' + this.imgName + '" class="card-img-top" alt="...">' +
-        '<div class="card-body">' +
-        '<p class="card-text questions">'+ this.question +'</p> ' +
-          '</div>' +
-          '</div>'+
+  }
 
-      
-        // '<img class="img-thumbnail" src=Q"' + this.imgName + '">' +
-        '<div class="answer" id="question-' + this.questionIndex + '">' + '</div>'
-      return displayQ;
-    };
-    displayAnswers() {
-      let answerQ = '<div class="answer-box>"' +
-        '<ul class="list-group answers">' +
-        '<li class="list-group-item">' + this.answer1 + '</li>' +
-        '<li class="list-group-item">' + this.answer2 + '</li>' +
-        '<li class="list-group-item">' + this.answer3 + '</li>' +
-        '<li class="list-group-item">' + this.answer4 + '</li>' +
-        '</ul>' + '</div>'
-
-      return answerQ;
-    };
-    displayCorrectAnswer() {
-      let correctAnswerQ = '<div class="answer">' + this.correctAnswer + '</div>' +
-        '<img class="img-thumbnail" src=A"' + this.imgName + '.png">' +
-        '<div class="answer" id="answer-' + this.questionIndex + '">' + '</div>'
-        console.log(correctAnswerQ);
-        return correctAnswerQ;
-    };
-
-  }//class Questions
-
-   // constructor(q, a1, a2, a3, a4, ca, img, index) 
-   let q1 = new gameQuestion('How many U.S. states border the Gulf of Mexico?', '8', '4', '1', '5', 'd', './assets/images/questions/Q1.png', 's1s');
-   let q2 = new gameQuestion('What is allspice alternatively known as?', 'Pimento', 'Grain', 'Filiment', 'Cinnamon', 'a', './assets/images/questions/Q2.png', 's2d');
-   let q3 = new gameQuestion('What is the world’s longest river?', 'Nile', 'Amazon', 'Colorado', 'Sahara', 'b', './assets/images/questions/Q3.png', 's3f');
-   let q4 = new gameQuestion('What is the world’s largest ocean?', 'Pacific', 'Antarctic', 'Yellow', 'Indiana', 'a', './assets/images/questions/Q4.png', 's4g');
-   let q5 = new gameQuestion('Which country is Prague in?', 'Romania', 'Italy', 'Georgia', 'Czech Republic', 'd', './assets/images/questions/Q5.png', 's5h');
-   let q6 = new gameQuestion('What does the N stand for in NATO?', 'National', 'North', 'Negative', 'New', 'b', './assets/images/questions/Q6.png', 's6j');
-  
-   const questionsArr = [q1, q2, q3, q4, q5, q6];
-
-   
-
-   function gameSetup(){
-    var quesDiv;
-    for (let i in questionsArr) {
-      quesDiv = $(questionsArr[i].displayQuestion()+questionsArr[i].displayAnswers());
-      // quesDiv += $(questionsArr[i].displayAnswers());
-      
-      quesDiv.appendTo("#right-game");
+  function runTimer() {
+    if (!runFlag) {
+      //if the game is not running, it is now, and set the timer to decrease by a second (1000 miliseconds)
+      timerInterval = setInterval(decrease, 100);
+      runFlag = true;
     }
   }
+  function decrease() {
+    //update the DOM for the timer
+    $('#countdown-timer').text(timer + ' seconds remaining...');
+    timer--;
+    //if the timer reaches 0, stop it.
+    if (timer < 0) {
+      unansweredNum++;
+      stopTimer();
+      $('#answer-area').html('<p>Your time has expired! The correct answer is: ' + currentQuestion.choices[currentQuestion.answer] + '</p>');
+      answerReDraw();
+    }
 
+  }
 
-   function displayQ(){
-  
+  function stopTimer() {
+    $('#countdown-timer').text('');
+    runFlag = false;
+    clearInterval(timerInterval);
+  }
+  function reset() {
+    stopTimer();
+    $('#reset-btn').hide();
+    // $('#start-btn').show();
+    $('#answer-area').empty();
+    $('#question-area').empty();
+    gameArray = [];
+    gameIndex = 0;
+    correctNum = 0;
+    incorrectNum = 0;
+    unansweredNum = 0;
+    timer = 20;
+    setArrayShuffle();
+    // questionDisplay();
+    displayDelay = setTimeout(questionDisplay, 1000);
+    runTimer();
+
+  }
+
+  $('#reset-btn').on('click', function () {
+    reset();
+  });
+  $('#header-btn-reset').on('click', function () {
+    reset();
+  });
+
+  $('body').on('click', '.list-group-item', function () {
+
+    guessedAnswer = parseInt($(this).attr('data-answerIndex'));
+
+    //correct guess or wrong guess outcomes
+    if (guessedAnswer === currentQuestion.answer) {
+      stopTimer();
+      correctNum++;
+      guessedAnswer = '';
+      $('#answer-area').html('<p>Correct!</p>');
+      answerReDraw();
+
+    } else {
+      stopTimer();
+      incorrectNum++;
+      guessedAnswer = '';
+      $('#answer-area').html('<p>Wrong! The correct answer is: ' + currentQuestion.choices[currentQuestion.answer] + '</p>');
+      answerReDraw();
+    }
+  });
+
+  function answerReDraw() {
+    $('#answer-area').append('<img src=' + currentQuestion.photo + '>');
+    // gameArray.push(currentQuestion);
+    // console.log('push: currentQ ' + currentQuestion.answer);
+
+    var fiveSecondDelay = setTimeout(function () {
+      $('#answer-area').empty();
+      $('#question-area').empty();
+      //TODO add a spinning image? Have 1 sec delay.
+      timer = 20;
+      console.log(incorrectNum);
+      console.log(correctNum);
+      console.log(unansweredNum);
+      console.log(gameArray.length);
+
+      //run the score screen if all questions answered
+      if ((incorrectNum + correctNum + unansweredNum) === gameArray.length) {
+        $('#question-area').empty();
+        $('#question-area').html('<h3>Game Over!  Here is how you did: of ' + gameArray.length + ' questions:</h3>');
+        $('#answer-area').append('<h4> Correct: ' + correctNum + '</h4>');
+        $('#answer-area').append('<h4> Incorrect: ' + incorrectNum + '</h4>');
+        $('#answer-area').append('<h4> Unanswered: ' + unansweredNum + '</h4>');
+        $('#reset-btn').show();
+
+      } else {
+        runTimer();
+        displayDelay = setTimeout(questionDisplay, 1000);
+
+      }
+    }, 5000);
+
   }
 
 
-   function displayA(){
-  
-  }
-
-
-   function displayCA(){
-  
-  }
-
-
-   $('#submit-btn').on("click", function () {
-    
-
-  });
-
-  $('#start-btn').on("click", function () {
-    
-    gameSetup();
-
-  });
-
-  $('body').on("click", '.list-group-item', function () {
-    console.log('selected. display result.');
-  });
 
 
 
-
- 
 });//document ready
