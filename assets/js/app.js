@@ -9,7 +9,8 @@ $(document).ready(function () {
   let correctNum = 0;
   let incorrectNum = 0;
   let unansweredNum = 0;
-  let timer = 20;
+  const constTime = 4;
+  let timer = constTime;
   let runFlag = false;
   let gameArray = [];
   let gameIndex = 0;
@@ -72,13 +73,26 @@ $(document).ready(function () {
     // $('#reset-btn').show();
   });
 
+//first make a copy of the trivia array and send it into Fisher Yates algorithm to shuffle. 
+//wanted to make a copy first to not alter the original array. It seems like a safeguard to me.
   function setArrayShuffle() {
     for (var i = 0; i < trivia.length; i++) {
       gameArray.push(trivia[i]);
       //TODO generate a random index in array, shuffle up the gameArray.
-      // gameIndex = Math.floor(Math.random() * gameArray.length);
+      //found an algorithm from some stats dudes from 1938, computerized in 1964.
+      fisherYatesShuffle(gameArray);
     }
+  }
 
+  //https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+  //essentially from what I understand, it starts at the back and then swaps that end location
+  //with a randomly picked location that comes before it. then it moves towards the front of the array and 
+  //repeats the process. 
+  function fisherYatesShuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i + 1)); // random index from 0 to i, the end swap is inclusive.   
+      [array[i], array[j]] = [array[j], array[i]]; // swap elements
+    }
   }
 
   function questionDisplay() {
@@ -100,7 +114,7 @@ $(document).ready(function () {
   function runTimer() {
     if (!runFlag) {
       //if the game is not running, it is now, and set the timer to decrease by a second (1000 miliseconds)
-      timerInterval = setInterval(decrease, 100);
+      timerInterval = setInterval(decrease, 1000);
       runFlag = true;
     }
   }
@@ -134,7 +148,7 @@ $(document).ready(function () {
     correctNum = 0;
     incorrectNum = 0;
     unansweredNum = 0;
-    timer = 20;
+    timer = constTime;
     setArrayShuffle();
     // questionDisplay();
     displayDelay = setTimeout(questionDisplay, 1000);
@@ -179,7 +193,7 @@ $(document).ready(function () {
       $('#answer-area').empty();
       $('#question-area').empty();
       //TODO add a spinning image? Have 1 sec delay.
-      timer = 20;
+      timer = constTime;
       console.log(incorrectNum);
       console.log(correctNum);
       console.log(unansweredNum);
