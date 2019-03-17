@@ -1,19 +1,10 @@
 
 body{
-    background-image: url("../images/bg.jpg");
-    /* background-repeat: no-repeat; */
-    background-position: top left;
-    /* background-attachment: fixed; */
+    background-image: url("../images/bg.jpg");    
+    background-position: top left;    
     background-color: #e2e2e2;
-    background-size:  cover;
-    /* margin-bottom: 60px; */
+    background-size:  cover;    
 }
-
-.player-card {
-    background-color: white;
-    border-radius: 4px;    
-}
-
 .quiz:hover{
     background-color:rgb(55, 180, 230);
     cursor: pointer;
