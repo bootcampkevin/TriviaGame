@@ -9,7 +9,7 @@ $(document).ready(function () {
   let correctNum = 0;
   let incorrectNum = 0;
   let unansweredNum = 0;
-  const constTime = 9;
+  const constTime = 9;//is set at 1 second below timer due to 1 second delay to run displaying unction 
   let timer = constTime;
   let runFlag = false;
   let gameArray = [];
@@ -77,7 +77,6 @@ $(document).ready(function () {
     //fill the game array with the trivia objects, shuffled around
     setArrayShuffle();
     questionDisplay();
-    // displayDelay = setTimeout(questionDisplay, 1000);
     runTimer();
     // $('#reset-btn').show();
   });
@@ -164,8 +163,7 @@ $(document).ready(function () {
     unansweredNum = 0;
     timer = constTime;
     setArrayShuffle();
-    questionDisplay();
-    // displayDelay = setTimeout(questionDisplay, 1000);
+    questionDisplay();    
     runTimer();
     $("#game-progress").css({width: 0+'%'});
     $("#left-game").show();
@@ -205,14 +203,11 @@ $(document).ready(function () {
     $('#answer-area').append('<div class="card text-center">' +
     '<img class="card-img-top" src="' + currentQuestion.imgSrc + '" style="max-height:400px">' +
       '<div class="card-body"><p class="card-text">'+ currentQuestion.answerText + '</p>'+
-      '</div></div>');
-    // gameArray.push(currentQuestion);
-    // console.log('push: currentQ ' + currentQuestion.answer);
+      '</div></div>');    
 
     var fiveSecondDelay = setTimeout(function () {
       $('#answer-area').empty();
-      $('#question-area').empty();
-      //TODO add a spinning image? Have 1 sec delay.
+      $('#question-area').empty();      
       timer = constTime;
       console.log(incorrectNum);
       console.log(correctNum);
@@ -234,8 +229,6 @@ $(document).ready(function () {
       } else {
         runTimer();
         questionDisplay();
-        // displayDelay = setTimeout(questionDisplay, 1000);
-
       }
     }, 5000);//five second delay between answer and next question. 
 
