@@ -139,7 +139,7 @@ $(document).ready(function () {
     if (timer < 0) {
       unansweredNum++;
       stopTimer();
-      $('#answer-area').html('<p class="p-3 mb-2 text-center list-group-item-warning">Your time has expired! The correct answer is: ' + currentQuestion.choices[currentQuestion.answer] + '</p>');
+      $('#answer-area').html('<p class="p-3 mb-2 text-center list-group-item-dark">Your time has expired! The correct answer is: ' + currentQuestion.choices[currentQuestion.answer] + '</p>');
       answerReDraw();
     }
 
