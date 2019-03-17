@@ -14,7 +14,7 @@
   <body>
     <header>
       <nav>
-        <div class="navbar navbar-dark bg-dark box-shadow">
+        <div class="navbar navbar-light bg-light box-shadow">
           <div class="container-fluid d-flex justify-content-between">
             <div class="navbar-brand d-flex align-items-center">
               <span><img width="30" height="30" class="mr-2" src="./assets/images/q.svg"></span>
@@ -33,16 +33,18 @@
         </div>
       </nav>
     </header>
-    <div class="container mt-5" style="min-height:500px;border: 1px solid #d2d2d2;">
-      <div class="row p-2" style="border: 1px solid red">
-        <div class="col p-4" style="border: 1px solid orange">
+    <div class="container mt-5" style="min-height:100px;border: 1px solid #d2d2d2;background-color:#ffffff;">
+      <div class="row p-2">
+        <div class="col p-4">
     
-          <div class="row p-2" style="border: 1px solid purple" id="quiz">
-            <div class="col-2 p-2" style="border: 1px solid yellow"><img src="http://placehold.it/50x100">
-              <div id="left-game">Time Left</div>
+          <div class="row p-2"id="quiz">
+            <div class="col-2 p-2">              
+              <img src="assets/images/timer.png" style="width:100%">
+              <div id="left-game" class="p-3 mb-2 text-center list-group-item">Time Left</div>
               <div id="countdown-timer"></div>
             </div>
-            <div class="col-10 p-2" style="border: 1px solid blue"><div class="title"></div>
+            <div class="col-10 p-2"><div class="title"></div>
+            
               <div id="right-game">
                 <div id="question-area"></div>
                 <div id="answer-area"></div>
@@ -53,10 +55,14 @@
         </div>
     
       </div>
-      <div class="row p-2" style="border: 1px solid aqua">
-        <div class="col p-2" style="border: 1px solid black">
-          <button type="button" class="btn btn-warning" id="start-btn">Start</button>
-          <button type="button" class="btn btn-warning" id="reset-btn">Reset</button>          
+      <div class="row p-2">
+        <div class="col p-2 text-center">
+          <button type="button" class="btn btn-warning mb-3" id="start-btn">Start Game</button>
+          <button type="button" class="btn btn-warning mb-3" id="reset-btn">Reset Game</button>
+          <div class="progress">
+            <div id="game-progress" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%"></div>
+          </div>
+
         </div>
       </div>
       <!-- style="border: 1px solid #d2d2d2;"-->
